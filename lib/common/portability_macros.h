@@ -137,6 +137,8 @@
 #  else
 #    define ZSTD_ASM_SUPPORTED 0
 #  endif
+#elif defined(_MSC_VER)
+#  define ZSTD_ASM_SUPPORTED 1
 #else
 #  define ZSTD_ASM_SUPPORTED 0
 #endif
@@ -152,9 +154,8 @@
  *   - DYNAMIC_BMI2 is enabled
  *   - BMI2 is supported at compile time
  */
-#if !defined(ZSTD_DISABLE_ASM) &&                                 \
-    ZSTD_ASM_SUPPORTED &&                                         \
-    defined(__x86_64__) &&                                        \
+#if !defined(ZSTD_DISABLE_ASM) && ZSTD_ASM_SUPPORTED &&           \
+    (defined(__x86_64__) || defined(_M_X64)) &&                   \
     (DYNAMIC_BMI2 || defined(__BMI2__))
 # define ZSTD_ENABLE_ASM_X86_64_BMI2 1
 #else
