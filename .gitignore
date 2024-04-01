@@ -40,11 +40,13 @@ bin/
 buck-out/
 build-*
 *.gcda
+msvc.build/
 
 # IDE
 .clang_complete
 compile_flags.txt
 .clang-format
+.vs/
 
 # Other files
 .directory
