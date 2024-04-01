@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="libzstd.vcxproj" Id="cd8b0845-3227-4db3-821e-3b2b1b21527d" />
+  <Project Path="zstd.vcxproj" Id="386c1e27-eb6f-49c7-adcc-8a74a27ee7db" />
+</Solution>
