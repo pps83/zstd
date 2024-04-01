@@ -32,6 +32,8 @@ build-*
 *.gcda
 cmakebuild/
 cmake-build/
+msvc.build/
+build.*/
 
 # Test artefacts
 tmp*
@@ -46,6 +48,7 @@ install/
 .clang_complete
 compile_flags.txt
 .clang-format
+.vs/
 
 # Other files
 .directory
