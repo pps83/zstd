@@ -917,7 +917,7 @@ static size_t HUF_decompress4X1_usingDTable_internal(void* dst, size_t dstSize, 
         return fallbackFn(dst, dstSize, cSrc, cSrcSize, DTable);
     }
 
-#if ZSTD_ENABLE_ASM_X86_64_BMI2 && defined(__BMI2__)
+#if ZSTD_ENABLE_ASM_X86_64_BMI2 && STATIC_BMI2
     if (!(flags & HUF_flags_disableAsm)) {
         loopFn = HUF_decompress4X1_usingDTable_internal_fast_asm_loop;
     }
@@ -1749,7 +1749,7 @@ static size_t HUF_decompress4X2_usingDTable_internal(void* dst, size_t dstSize, 
         return fallbackFn(dst, dstSize, cSrc, cSrcSize, DTable);
     }
 
-#if ZSTD_ENABLE_ASM_X86_64_BMI2 && defined(__BMI2__)
+#if ZSTD_ENABLE_ASM_X86_64_BMI2 && STATIC_BMI2
     if (!(flags & HUF_flags_disableAsm)) {
         loopFn = HUF_decompress4X2_usingDTable_internal_fast_asm_loop;
     }
