@@ -116,13 +116,16 @@ std::string fmtStr(const char* fmt, ...)
     return buf;
 }
 
+extern "C" void ZSTD_enable_cl();
+extern "C" void ZSTD_enable_clang();
+
 int main(int argc, const char* argv[])
 {
     std::string testdata;
     if (!readFile("test-data.json", testdata))
         error("test-data.json missing\n");
 
-    const int N = 5;
+    const int N = 3;
 
     struct result
     {
@@ -131,25 +134,33 @@ int main(int argc, const char* argv[])
         long long uncompressTicks = INT_MAX;
     };
 
-    std::map<std::string, std::map<int, std::map<size_t, result>>> results;
-
-    static const int levels[] = {1, 5, 10};
-    for (auto LEVEL : levels)
+    std::map<std::string, std::map<int, result>> results;
+    for (int type = 0; type < 2; ++type)
     {
-        auto& r = results["zstd"][LEVEL][testdata.size()];
-        for (int i = 0; i < 2; ++i)
+        if (type == 0)
+            ZSTD_enable_cl();
+        else if (type == 1)
+            ZSTD_enable_clang();
+
+        static const int levels[] = {1, 5, 10};
+        for (auto LEVEL : levels)
         {
-            std::string bodyCompressed;
-            long long t0 = timeTicks();
-            compressZstd(testdata, bodyCompressed, LEVEL);
-            r.compressTicks = std::min(r.compressTicks, timeTicks() - t0);
-            r.compressedSize = bodyCompressed.size();
-            std::string body;
-            for (int ii = 0; ii < N; ++ii) {
-                body.clear();
-                t0 = timeTicks();
-                uncompressZstd(bodyCompressed, body, testdata.size());
-                r.uncompressTicks = std::min(r.uncompressTicks, timeTicks() - t0);
+            const char* codec = type == 0 ? "zstd" : "zstd-clang";
+            auto& r = results[codec][LEVEL];
+            for (int i = 0; i < 3; ++i)
+            {
+                std::string bodyCompressed;
+                long long t0 = timeTicks();
+                compressZstd(testdata, bodyCompressed, LEVEL);
+                r.compressTicks = std::min(r.compressTicks, timeTicks() - t0);
+                r.compressedSize = bodyCompressed.size();
+                std::string body;
+                for (int ii = 0; ii < N; ++ii) {
+                    body.clear();
+                    t0 = timeTicks();
+                    uncompressZstd(bodyCompressed, body, testdata.size());
+                    r.uncompressTicks = std::min(r.uncompressTicks, timeTicks() - t0);
+                }
             }
         }
     }
@@ -157,21 +168,15 @@ int main(int argc, const char* argv[])
     auto ticksTimeStr = [](int64_t t) { return fmtStr("%.2fus", ticksToMicro(t * 100) / 100.0); };
     for (const auto& [codec, v1] : results)
     {
+        printf("%s:\n", codec.c_str());
         int64_t eticksAll = 0, dticksAll = 0;
-        for (const auto& [level, v2] : v1)
+        for (const auto& [level, res] : v1)
         {
-            int64_t testsz = 0, outsz = 0, eticks = 0, dticks = 0;
-            for (const auto& [testDataSize, p] : v2)
-            {
-                testsz += testDataSize;
-                outsz += p.compressedSize;
-                eticks += p.compressTicks;
-                dticks += p.uncompressTicks;
-                eticksAll += p.compressTicks;
-                dticksAll += p.uncompressTicks;
-            }
-            printf("L:%2d etime:%-11s (%lld, %.2f%%), dtime:%s\n", level, ticksTimeStr(eticks).c_str(), outsz, outsz * 100.0 / testsz, ticksTimeStr(dticks).c_str());
+            eticksAll += res.compressTicks;
+            dticksAll += res.uncompressTicks;
+            printf("L:%2d etime:%-11s (%lld, %.2f%%), dtime:%s\n", level, ticksTimeStr(res.compressTicks).c_str(),
+                res.compressedSize, res.compressedSize * 100.0 / testdata.size(), ticksTimeStr(res.uncompressTicks).c_str());
         }
-        printf("\ntotal etime:%s, total dtime:%s\n", ticksTimeStr(eticksAll).c_str(), ticksTimeStr(dticksAll).c_str());
+        printf("total etime:%s, total dtime:%s\n\n", ticksTimeStr(eticksAll).c_str(), ticksTimeStr(dticksAll).c_str());
     }
 }
