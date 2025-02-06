@@ -104,6 +104,16 @@ long long ticksToMicro(long long x)
     return 1000000LL * x_sec + 1000000LL * x_rem / qpcFreq;
 }
 
+std::string fmtStr(const char* fmt, ...)
+{
+    char buf[1024];
+    va_list argList;
+    va_start(argList, fmt);
+    vsnprintf(buf, 1000, fmt, argList);
+    va_end(argList);
+    return buf;
+}
+
 int main(int argc, const char* argv[])
 {
     std::string testdata;
