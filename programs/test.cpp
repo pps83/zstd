@@ -125,6 +125,11 @@ int main(int argc, const char* argv[])
     if (!readFile("test-data.json", testdata))
         error("test-data.json missing\n");
 
+    // thread to run on CPU 1
+    SetThreadAffinityMask(GetCurrentThread(), 1 << 1);
+    SetProcessPriorityBoost(GetCurrentProcess(), TRUE);
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+
     const int N = 3;
 
     struct result
