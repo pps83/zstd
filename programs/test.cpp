@@ -165,6 +165,8 @@ int main(int argc, const char* argv[])
         }
     }
 
+    int64_t dticksAll_cl = 0, dticksAll_clang = 0;
+
     auto ticksTimeStr = [](int64_t t) { return fmtStr("%.2fus", ticksToMicro(t * 100) / 100.0); };
     for (const auto& [codec, v1] : results)
     {
@@ -174,9 +176,17 @@ int main(int argc, const char* argv[])
         {
             eticksAll += res.compressTicks;
             dticksAll += res.uncompressTicks;
-            printf("L:%2d etime:%-11s (%lld, %.2f%%), dtime:%s\n", level, ticksTimeStr(res.compressTicks).c_str(),
+            printf("L:%2d etime:%-11s (%zu, %.2f%%), dtime:%s\n", level, ticksTimeStr(res.compressTicks).c_str(),
                 res.compressedSize, res.compressedSize * 100.0 / testdata.size(), ticksTimeStr(res.uncompressTicks).c_str());
         }
         printf("total etime:%s, total dtime:%s\n\n", ticksTimeStr(eticksAll).c_str(), ticksTimeStr(dticksAll).c_str());
+        if (codec == "zstd-clang")
+            dticksAll_clang = dticksAll;
+        else
+            dticksAll_cl = dticksAll;
     }
+
+    printf("ZSTD_decompressSequences_body compiled with clang does zstd decompression %.02f%% %s\n",
+        100.0 * std::abs(dticksAll_cl - dticksAll_clang) / dticksAll_cl,
+        dticksAll_clang < dticksAll_cl ? "faster" : "slower");
 }
