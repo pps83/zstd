@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <string>
 #include <string_view>
+#include <utility>
+#include <map>
 #include <windows.h>
 
 bool readFile(const char* fileName, std::string& fileData)
@@ -119,4 +121,57 @@ int main(int argc, const char* argv[])
     std::string testdata;
     if (!readFile("test-data.json", testdata))
         error("test-data.json missing\n");
+
+    const int N = 5;
+
+    struct result
+    {
+        size_t compressedSize = 0;
+        long long compressTicks = INT_MAX;
+        long long uncompressTicks = INT_MAX;
+    };
+
+    std::map<std::string, std::map<int, std::map<size_t, result>>> results;
+
+    static const int levels[] = {1, 5, 10};
+    for (auto LEVEL : levels)
+    {
+        auto& r = results["zstd"][LEVEL][testdata.size()];
+        for (int i = 0; i < 2; ++i)
+        {
+            std::string bodyCompressed;
+            long long t0 = timeTicks();
+            compressZstd(testdata, bodyCompressed, LEVEL);
+            r.compressTicks = std::min(r.compressTicks, timeTicks() - t0);
+            r.compressedSize = bodyCompressed.size();
+            std::string body;
+            for (int ii = 0; ii < N; ++ii) {
+                body.clear();
+                t0 = timeTicks();
+                uncompressZstd(bodyCompressed, body, testdata.size());
+                r.uncompressTicks = std::min(r.uncompressTicks, timeTicks() - t0);
+            }
+        }
+    }
+
+    auto ticksTimeStr = [](int64_t t) { return fmtStr("%.2fus", ticksToMicro(t * 100) / 100.0); };
+    for (const auto& [codec, v1] : results)
+    {
+        int64_t eticksAll = 0, dticksAll = 0;
+        for (const auto& [level, v2] : v1)
+        {
+            int64_t testsz = 0, outsz = 0, eticks = 0, dticks = 0;
+            for (const auto& [testDataSize, p] : v2)
+            {
+                testsz += testDataSize;
+                outsz += p.compressedSize;
+                eticks += p.compressTicks;
+                dticks += p.uncompressTicks;
+                eticksAll += p.compressTicks;
+                dticksAll += p.uncompressTicks;
+            }
+            printf("L:%2d etime:%-11s (%lld, %.2f%%), dtime:%s\n", level, ticksTimeStr(eticks).c_str(), outsz, outsz * 100.0 / testsz, ticksTimeStr(dticks).c_str());
+        }
+        printf("\ntotal etime:%s, total dtime:%s\n", ticksTimeStr(eticksAll).c_str(), ticksTimeStr(dticksAll).c_str());
+    }
 }
