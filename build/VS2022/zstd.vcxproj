@@ -24,6 +24,7 @@
     <ProjectGuid>{386c1e27-eb6f-49c7-adcc-8a74a27ee7db}</ProjectGuid>
     <RootNamespace>zstd</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>test</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -86,6 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -100,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,32 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\programs\benchfn.c" />
-    <ClCompile Include="..\..\programs\benchzstd.c" />
-    <ClCompile Include="..\..\programs\datagen.c" />
-    <ClCompile Include="..\..\programs\dibio.c" />
-    <ClCompile Include="..\..\programs\fileio.c" />
-    <ClCompile Include="..\..\programs\fileio_asyncio.c" />
-    <ClCompile Include="..\..\programs\lorem.c" />
-    <ClCompile Include="..\..\programs\timefn.c" />
-    <ClCompile Include="..\..\programs\util.c" />
-    <ClCompile Include="..\..\programs\zstdcli.c" />
-    <ClCompile Include="..\..\programs\zstdcli_trace.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\programs\benchfn.h" />
-    <ClInclude Include="..\..\programs\benchzstd.h" />
-    <ClInclude Include="..\..\programs\datagen.h" />
-    <ClInclude Include="..\..\programs\dibio.h" />
-    <ClInclude Include="..\..\programs\fileio.h" />
-    <ClInclude Include="..\..\programs\fileio_asyncio.h" />
-    <ClInclude Include="..\..\programs\fileio_common.h" />
-    <ClInclude Include="..\..\programs\fileio_types.h" />
-    <ClInclude Include="..\..\programs\lorem.h" />
-    <ClInclude Include="..\..\programs\platform.h" />
-    <ClInclude Include="..\..\programs\timefn.h" />
-    <ClInclude Include="..\..\programs\util.h" />
-    <ClInclude Include="..\..\programs\zstdcli_trace.h" />
+    <ClCompile Include="..\..\programs\test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="libzstd.vcxproj">

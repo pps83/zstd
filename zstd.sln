@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzstd", "build\VS2022\libzstd.vcxproj", "{CD8B0845-3227-4DB3-821E-3B2B1B21527D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zstd", "build\VS2022\zstd.vcxproj", "{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "build\VS2022\zstd.vcxproj", "{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
