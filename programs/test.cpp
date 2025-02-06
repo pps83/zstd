@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string>
 #include <string_view>
+#include <windows.h>
 
 bool readFile(const char* fileName, std::string& fileData)
 {
@@ -78,6 +79,29 @@ int compressZstd(std::string_view body, std::string& bodyCompressed, int compres
 int uncompressZstd(std::string_view body, std::string& bodyUncompressed, size_t uncompressedSize)
 {
     return uncompress(body, bodyUncompressed, uncompressedSize, uncompressZstd);
+}
+
+long long timeTicks()
+{
+    LARGE_INTEGER n;
+    QueryPerformanceCounter(&n);
+    return n.QuadPart;
+}
+
+long long ticksToMicro(long long x)
+{
+    static long long qpcFreq = 0;
+    if (qpcFreq == 0)
+    {
+        LARGE_INTEGER n;
+        QueryPerformanceFrequency(&n);
+        qpcFreq = n.QuadPart;
+    }
+    if (qpcFreq == 10000000)
+        return x / 10;
+    long long x_sec = x / qpcFreq;
+    long long x_rem = x % qpcFreq;
+    return 1000000LL * x_sec + 1000000LL * x_rem / qpcFreq;
 }
 
 int main(int argc, const char* argv[])
