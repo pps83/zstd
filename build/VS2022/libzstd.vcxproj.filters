@@ -220,8 +220,5 @@
     <ClCompile Include="..\..\lib\compress\zstd_preSplit.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\lib\decompress\ZSTD_decompressSequences_body.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

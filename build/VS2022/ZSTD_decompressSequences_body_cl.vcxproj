@@ -21,9 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cd8b0845-3227-4db3-821e-3b2b1b21527d}</ProjectGuid>
+    <ProjectGuid>{EA968176-0E1A-4DD9-9642-A31D096175B1}</ProjectGuid>
     <RootNamespace>libzstd</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ZSTD_decompressSequences_body_cl</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -121,82 +122,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\lib\common\allocations.h" />
-    <ClInclude Include="..\..\lib\common\bits.h" />
-    <ClInclude Include="..\..\lib\common\bitstream.h" />
-    <ClInclude Include="..\..\lib\common\compiler.h" />
-    <ClInclude Include="..\..\lib\common\cpu.h" />
-    <ClInclude Include="..\..\lib\common\debug.h" />
-    <ClInclude Include="..\..\lib\common\error_private.h" />
-    <ClInclude Include="..\..\lib\common\fse.h" />
-    <ClInclude Include="..\..\lib\common\huf.h" />
-    <ClInclude Include="..\..\lib\common\mem.h" />
-    <ClInclude Include="..\..\lib\common\pool.h" />
-    <ClInclude Include="..\..\lib\common\portability_macros.h" />
-    <ClInclude Include="..\..\lib\common\threading.h" />
-    <ClInclude Include="..\..\lib\common\xxhash.h" />
-    <ClInclude Include="..\..\lib\common\zstd_deps.h" />
-    <ClInclude Include="..\..\lib\common\zstd_internal.h" />
-    <ClInclude Include="..\..\lib\common\zstd_trace.h" />
-    <ClInclude Include="..\..\lib\compress\clevels.h" />
-    <ClInclude Include="..\..\lib\compress\hist.h" />
-    <ClInclude Include="..\..\lib\compress\zstdmt_compress.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_compress_internal.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_compress_literals.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_compress_sequences.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_compress_superblock.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_cwksp.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_double_fast.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_fast.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_lazy.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_ldm.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_ldm_geartab.h" />
-    <ClInclude Include="..\..\lib\compress\zstd_opt.h" />
-    <ClInclude Include="..\..\lib\decompress\zstd_ddict.h" />
-    <ClInclude Include="..\..\lib\decompress\zstd_decompress_block.h" />
-    <ClInclude Include="..\..\lib\decompress\zstd_decompress_internal.h" />
-    <ClInclude Include="..\..\lib\dictBuilder\cover.h" />
-    <ClInclude Include="..\..\lib\dictBuilder\divsufsort.h" />
-    <ClInclude Include="..\..\lib\zdict.h" />
-    <ClInclude Include="..\..\lib\zstd.h" />
-    <ClInclude Include="..\..\lib\zstd_errors.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\lib\common\debug.c" />
-    <ClCompile Include="..\..\lib\common\entropy_common.c" />
-    <ClCompile Include="..\..\lib\common\error_private.c" />
-    <ClCompile Include="..\..\lib\common\fse_decompress.c" />
-    <ClCompile Include="..\..\lib\common\pool.c" />
-    <ClCompile Include="..\..\lib\common\threading.c" />
-    <ClCompile Include="..\..\lib\common\xxhash.c" />
-    <ClCompile Include="..\..\lib\common\zstd_common.c" />
-    <ClCompile Include="..\..\lib\compress\fse_compress.c" />
-    <ClCompile Include="..\..\lib\compress\hist.c" />
-    <ClCompile Include="..\..\lib\compress\huf_compress.c" />
-    <ClCompile Include="..\..\lib\compress\zstdmt_compress.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_compress.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_compress_literals.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_compress_sequences.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_compress_superblock.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_double_fast.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_fast.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_lazy.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_ldm.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_opt.c" />
-    <ClCompile Include="..\..\lib\compress\zstd_preSplit.c" />
-    <ClCompile Include="..\..\lib\decompress\huf_decompress.c" />
-    <ClCompile Include="..\..\lib\decompress\zstd_ddict.c" />
-    <ClCompile Include="..\..\lib\decompress\zstd_decompress.c" />
-    <ClCompile Include="..\..\lib\decompress\zstd_decompress_block.c" />
-    <ClCompile Include="..\..\lib\dictBuilder\cover.c" />
-    <ClCompile Include="..\..\lib\dictBuilder\divsufsort.c" />
-    <ClCompile Include="..\..\lib\dictBuilder\fastcover.c" />
-    <ClCompile Include="..\..\lib\dictBuilder\zdict.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="ZSTD_decompressSequences_body_cl.vcxproj">
-      <Project>{ea968176-0e1a-4dd9-9642-a31d096175b1}</Project>
-    </ProjectReference>
+    <ClCompile Include="..\..\lib\decompress\ZSTD_decompressSequences_body.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

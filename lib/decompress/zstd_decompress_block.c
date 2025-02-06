@@ -1610,10 +1610,15 @@ ZSTD_decompressSequences_bodySplitLitBuffer( ZSTD_DCtx* dctx,
     return (size_t)(op - ostart);
 }
 
-size_t ZSTD_decompressSequences_body(ZSTD_DCtx* dctx,
+size_t ZSTD_decompressSequences_body_cl(ZSTD_DCtx* dctx,
     void* dst, size_t maxDstSize,
     const void* seqStart, size_t seqSize, int nbSeq,
     const ZSTD_longOffset_e isLongOffset);
+
+size_t(*ZSTD_decompressSequences_body)(ZSTD_DCtx* dctx,
+    void* dst, size_t maxDstSize,
+    const void* seqStart, size_t seqSize, int nbSeq,
+    const ZSTD_longOffset_e isLongOffset) = ZSTD_decompressSequences_body_cl;
 
 static size_t
 ZSTD_decompressSequences_default(ZSTD_DCtx* dctx,

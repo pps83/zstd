@@ -1214,6 +1214,29 @@ ZSTD_decodeSequence(seqState_t* seqState, const ZSTD_longOffset_e longOffsets, c
     return seq;
 }
 
+extern size_t(*ZSTD_decompressSequences_body)(ZSTD_DCtx* dctx,
+    void* dst, size_t maxDstSize,
+    const void* seqStart, size_t seqSize, int nbSeq,
+    const ZSTD_longOffset_e isLongOffset);
+static size_t(**decompressSequences_body)(ZSTD_DCtx* dctx,
+    void* dst, size_t maxDstSize,
+    const void* seqStart, size_t seqSize, int nbSeq,
+    const ZSTD_longOffset_e isLongOffset) = &ZSTD_decompressSequences_body;
+
+#if defined(__INTEL_LLVM_COMPILER) && (__INTEL_LLVM_COMPILER / 10000 % 1000 == 24)
+#define ZSTD_decompressSequences_body ZSTD_decompressSequences_body_icx24
+#define ZSTD_enable ZSTD_enable_icx24
+#elif defined(__INTEL_LLVM_COMPILER) && (__INTEL_LLVM_COMPILER / 10000 % 1000 == 25)
+#define ZSTD_decompressSequences_body ZSTD_decompressSequences_body_icx25
+#define ZSTD_enable ZSTD_enable_icx25
+#elif defined(__clang__)
+#define ZSTD_decompressSequences_body ZSTD_decompressSequences_body_clang
+#define ZSTD_enable ZSTD_enable_clang
+#elif defined(_MSC_VER)
+#define ZSTD_decompressSequences_body ZSTD_decompressSequences_body_cl
+#define ZSTD_enable ZSTD_enable_cl
+#endif
+
 size_t DONT_VECTORIZE
 ZSTD_decompressSequences_body(ZSTD_DCtx* dctx,
     void* dst, size_t maxDstSize,
@@ -1290,4 +1313,9 @@ ZSTD_decompressSequences_body(ZSTD_DCtx* dctx,
 
     DEBUGLOG(6, "decoded block of size %u bytes", (U32)(op - ostart));
     return (size_t)(op - ostart);
+}
+
+void ZSTD_enable()
+{
+    *decompressSequences_body = &ZSTD_decompressSequences_body;
 }

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzstd", "build\VS2022\lib
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "build\VS2022\zstd.vcxproj", "{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZSTD_decompressSequences_body_cl", "build\VS2022\ZSTD_decompressSequences_body_cl.vcxproj", "{EA968176-0E1A-4DD9-9642-A31D096175B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}.Release|x64.Build.0 = Release|x64
 		{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}.Release|x86.ActiveCfg = Release|Win32
 		{386C1E27-EB6F-49C7-ADCC-8A74A27EE7DB}.Release|x86.Build.0 = Release|Win32
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Debug|x64.ActiveCfg = Debug|x64
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Debug|x64.Build.0 = Debug|x64
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Debug|x86.ActiveCfg = Debug|Win32
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Debug|x86.Build.0 = Debug|Win32
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Release|x64.ActiveCfg = Release|x64
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Release|x64.Build.0 = Release|x64
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Release|x86.ActiveCfg = Release|Win32
+		{EA968176-0E1A-4DD9-9642-A31D096175B1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
