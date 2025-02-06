@@ -187,6 +187,7 @@
     <ClCompile Include="..\..\lib\decompress\huf_decompress.c" />
     <ClCompile Include="..\..\lib\decompress\zstd_ddict.c" />
     <ClCompile Include="..\..\lib\decompress\zstd_decompress.c" />
+    <ClCompile Include="..\..\lib\decompress\ZSTD_decompressSequences_body.c" />
     <ClCompile Include="..\..\lib\decompress\zstd_decompress_block.c" />
     <ClCompile Include="..\..\lib\dictBuilder\cover.c" />
     <ClCompile Include="..\..\lib\dictBuilder\divsufsort.c" />
